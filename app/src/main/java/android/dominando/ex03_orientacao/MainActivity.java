@@ -21,7 +21,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nomes = new ArrayList<String>();
+        if (savedInstanceState != null) {
+            nomes = savedInstanceState.getStringArrayList("nomes");
+        } else {
+            nomes = new ArrayList<String>();
+        }
         edt = (EditText) findViewById(R.id.editText1);
 
         ListView listView = (ListView) findViewById(R.id.listView1);
@@ -36,5 +40,11 @@ public class MainActivity extends AppCompatActivity {
         nomes.add(edt.getText().toString());
         edt.setText("");
         adapter.notifyDataSetChanged();;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle bundle){
+        super.onSaveInstanceState(bundle);
+        bundle.putStringArrayList("nomes", nomes);
     }
 }
